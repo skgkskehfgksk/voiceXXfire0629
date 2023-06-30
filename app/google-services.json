@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "889812695295",
+    "project_id": "voice-9b544",
+    "storage_bucket": "voice-9b544.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889812695295:android:d5a87ea8c25b25f223b4ca",
+        "android_client_info": {
+          "package_name": "com.example.voice0622"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889812695295-ip3odvtpnij7cqpfo0g3dah9vjt9etiu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_S_eYIWPly4E_5-LCJTpL88bYicyuvC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889812695295-ip3odvtpnij7cqpfo0g3dah9vjt9etiu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
