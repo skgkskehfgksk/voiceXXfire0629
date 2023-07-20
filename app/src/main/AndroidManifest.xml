@@ -13,6 +13,14 @@
         android:theme="@style/Base.Theme.VoiceXXfire0629"
         tools:targetApi="31">
         <activity
+            android:name=".ProfileDetailActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7103646437173813~4014024053" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -21,7 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SubActivity"></activity>
+        <activity android:name=".SubActivity" />
+        <activity android:name=".RcActivity" />
     </application>
 
 </manifest>

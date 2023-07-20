@@ -4,63 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
     tools:context=".SubActivity">
 
     <Button
         android:id="@+id/btnback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="153dp"
+        android:layout_height="63dp"
+        android:background="@drawable/botton_pattern1"
         android:text="돌아가기"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
-        app:layout_constraintVertical_bias="0.465" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_privacy"
+        app:layout_constraintVertical_bias="0.242" />
 
     <TextView
-        android:id="@+id/tv_sub_1"
-        android:layout_width="236dp"
-        android:layout_height="39dp"
-        android:text="sub"
+        android:id="@+id/tv_sub1"
+        android:layout_width="220dp"
+        android:layout_height="64dp"
+        android:background="@drawable/tv_gradient"
+        android:gravity="center"
+        android:text=" 환경 및 기타  "
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnback"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.092" />
+        app:layout_constraintVertical_bias="0.164" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/btn_history"
+        android:layout_width="115dp"
+        android:layout_height="53dp"
+        android:background="@drawable/button_transparent"
         android:text="history"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.257"
+        app:layout_constraintHorizontal_bias="0.138"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.269" />
+        app:layout_constraintVertical_bias="0.288" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="설정"
+        android:id="@+id/btn_api"
+        android:layout_width="110dp"
+        android:layout_height="48dp"
+        android:background="@drawable/button_transparent"
+        android:text="api저장"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.253"
+        app:layout_constraintHorizontal_bias="0.136"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.144" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_history"
+        app:layout_constraintVertical_bias="0.219" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:id="@+id/btn_privacy"
+        android:layout_width="103dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/button_transparent"
         android:text="개인 보호 정책"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.296"
+        app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_api" />
+
+    <EditText
+        android:id="@+id/et_sub1"
+        android:layout_width="358dp"
+        android:layout_height="62dp"
+        android:background="@null"
+        android:ems="10"
+        android:hint="챗 gpt api 키를 입력하세요"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.773"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/tv_sub2"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="33dp"
+        android:hint="저장된 키 값"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/btn_privacy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_api"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-7103646437173813/2976274557"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
