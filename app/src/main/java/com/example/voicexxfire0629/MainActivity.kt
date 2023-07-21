@@ -177,11 +177,11 @@ class MainActivity : AppCompatActivity() {
         }
         //  영어 체이지 버튼 클릭시
         btn_current_location.setOnClickListener{
-            if(tv4.text === "한글"){
+            if(kor == 1){
                 tv4.text = "영어"
                 tv5.text = "한글"
                 kor = 2
-            }else {
+            }else{
                 tv4.text = "한글"
                 tv5.text = "영어"
                 kor = 1
@@ -457,11 +457,15 @@ class MainActivity : AppCompatActivity() {
                 // 한글로 음성 출력
                 textToSpeech.language = Locale.KOREAN
                 textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+                textToSpeech.setPitch(0.7f)
+                textToSpeech.setSpeechRate(0.8f)
             }
             1 -> {
                 // 영어로 음성 출력
                 textToSpeech.language = Locale.US
                 textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+                textToSpeech.setPitch(0.7f)
+                textToSpeech.setSpeechRate(0.8f)
             }
         }
     }
