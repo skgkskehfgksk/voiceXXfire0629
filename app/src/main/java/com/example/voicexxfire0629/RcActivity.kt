@@ -38,18 +38,23 @@ class RcActivity : AppCompatActivity() {
         //파일리스트 불러온후 변수저장
         val txtFiles = getTxtFilesFromExternalCache()
 
-
+// 어댑터 선언
         profileAdapter = ProfileAdapter(this)
+        //어댑터 뷰바인딩
         binding.rvProfile.adapter = profileAdapter
 
         for (i in txtFiles) {
 // ProfileData 클래스에서 이미지 리소스 아이디가 Int 타입으로 정의되어 있다고 가정합니다.
+
             datas.add(ProfileData(img = R.drawable.baseline_article_24, name = i.toString()))
 
         }
 
         binding.rvProfile.addItemDecoration(VerticalItemDecorator(20))
         binding.rvProfile.addItemDecoration(HorizontalItemDecorator(10))
+
+        // 리스트를 역순으로 변경합니다.
+        datas.reverse()
 
         profileAdapter.datas = datas
         profileAdapter.notifyDataSetChanged()
@@ -65,13 +70,9 @@ class RcActivity : AppCompatActivity() {
             if (files != null) {
                 for (file in files) {
                     if (file.isFile && file.extension.equals("txt", true)) {
-                        // 문자열을 ","를 기준으로 분할하여 배열로 만듭니다.
-                        val stringArray = file.toString().split("/")
 
-                        // 마지막 배열 요소를 선택합니다.
-                        val file = stringArray.last()
 
-                        txtFiles.add(file) // 파일 이름만 추가
+                        txtFiles.add(file.toString()) // 파일 이름만 추가
                     }
                 }
             }

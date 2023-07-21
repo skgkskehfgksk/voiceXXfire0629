@@ -34,7 +34,12 @@ class ProfileAdapter(private val context: Context) : RecyclerView.Adapter<Profil
         private val imgProfile: ImageView = itemView.findViewById(R.id.img_rv_photo)
 
         fun bind(item: ProfileData) {
-            txtName.text = item.name
+            // 문자열을 ","를 기준으로 분할하여 배열로 만듭니다.
+            val stringArray = item.name.toString().split("/")
+
+            // 마지막 배열 요소를 선택합니다.
+            val s = stringArray.last()
+            txtName.text = s
 
             Glide.with(itemView).load(item.img).into(imgProfile)
 

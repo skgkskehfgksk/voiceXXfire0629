@@ -25,7 +25,7 @@
         android:layout_marginEnd="153dp"
         android:layout_marginBottom="101dp"
         android:background="@drawable/botton_pattern1"
-        android:text="돌아가기"
+        android:text="뒤로가기"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

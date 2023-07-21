@@ -113,11 +113,6 @@ class MainActivity : AppCompatActivity() {
         mAdView.loadAd(adRequest)
 
 
-        //////구글배너광고 초기화
-//        MobileAds.initialize(this)
-//        val adRequest = AdRequest.Builder().build()
-//        binding.adView.loadAd(adRequest)
-
         // 저장된 key 값 가져오기
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         key = sharedPreferences.getString("key", "") ?: ""
@@ -197,6 +192,7 @@ class MainActivity : AppCompatActivity() {
             et1?.setText("")
             tv4.text = "한글"
             tv5.text = "영어"
+            tv1.text = "---"
             kor = 1
         }
         //번역버튼
@@ -208,26 +204,11 @@ class MainActivity : AppCompatActivity() {
                 transentokor()
             }
         }
-        //음성입력버튼
-        btn_voice.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), PERMISSIONS_RECORD_AUDIO)
-            } else {
-                startSpeechToText()
-            }
-        }
+
         //버튼 듣기1
         btn_speak1.setOnClickListener{
             speak1()
-//            // 비프음 발생
-//            val toneGenerator = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
-//            toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP)
-//
-//            // 3초 대기
-//            Handler().postDelayed({
-//                // 비프음 중지
-//                toneGenerator.stopTone()
-//            }, 1000)
+
         }
         //버튼 듣기2
         btn_speak2.setOnClickListener{
@@ -242,13 +223,13 @@ class MainActivity : AppCompatActivity() {
             val dialogFragment = CustomDialogFragment()
             dialogFragment.show(supportFragmentManager, "CustomDialogFragment")
         }
-        /////////////////////////////////////////////////////////////////////
+        ////
         btn_voice.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), PERMISSIONS_RECORD_AUDIO)
             } else {
+
                 startSpeechToText()
-                tv4.text = "음성준비"
             }
         }
     }
@@ -271,7 +252,7 @@ class MainActivity : AppCompatActivity() {
         }
         return super.dispatchTouchEvent(event)
     }
-    //
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -280,7 +261,10 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSIONS_RECORD_AUDIO) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                tv1.text = "준비"
                 startSpeechToText()
+            }else {
+                tv1.text = "권한 거부됨"
             }
         }
     }
@@ -290,15 +274,20 @@ class MainActivity : AppCompatActivity() {
         val speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        if (kor == 1) {
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.KOREAN)
+        } else if (kor == 2) {
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ENGLISH)
+        }
+
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "음성을 입력하세요.")
         speechRecognizer.setRecognitionListener(object : RecognitionListener {
             override fun onReadyForSpeech(params: Bundle?) {
                 // 음성 입력 준비가 완료되었을 때 호출됩니다.
+                tv1.text = "녹음중"
             }
             override fun onBeginningOfSpeech() {
                 // 음성 입력이 시작될 때 호출됩니다.
-                tv1.text = "녹음중"
 
             }
             override fun onRmsChanged(rmsdB: Float) {
@@ -319,13 +308,14 @@ class MainActivity : AppCompatActivity() {
                 if (!matches.isNullOrEmpty()) {
                     val inputText = matches[0]
                     if (kor == 1){
+                        et1?.setText(inputText.toString())
                         transkortoen1(inputText)
+
                     }
                     else{
+                        et1?.setText(inputText.toString())
                         transentokor1(inputText)
                     }
-
-
                 }
             }
             override fun onPartialResults(partialResults: Bundle?) {
@@ -420,6 +410,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 .addOnFailureListener { exception ->
+
                     et2?.setText(exception.toString())
                 }
         }
@@ -441,6 +432,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 .addOnFailureListener { exception ->
+
                     et2?.setText(exception.toString())
                 }
         }
@@ -477,12 +469,12 @@ class MainActivity : AppCompatActivity() {
         val text = et3?.text.toString()
 
         when (kor) {
-            1 -> {
+            2 -> {
                 // 한글로 음성 출력
                 textToSpeech.language = Locale.KOREAN
                 textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
             }
-            2 -> {
+            1 -> {
                 // 영어로 음성 출력
                 textToSpeech.language = Locale.US
                 textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)

@@ -79,11 +79,11 @@ class SubActivity : AppCompatActivity() {
             val intent = Intent(this, RcActivity::class.java)
             startActivity(intent)
 
-
         }
         //개인보호정책 버튼 클릭시
         btn_privacy.setOnClickListener {
-
+            val intent5 = Intent(this, PrivacyPolicyActivity::class.java)
+            startActivity(intent5)
         }
 
 
