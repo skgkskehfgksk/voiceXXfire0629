@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,94 +7,113 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btnmenu"
-        android:layout_width="68dp"
-        android:layout_height="68dp"
-        android:background="@drawable/button_menu"
-        android:shadowColor="#FF2BB5"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="메뉴"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <FrameLayout
+        android:id="@+id/frameLayout0"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+
+
+        android:layout_marginTop="10dp"
+        android:background="#004AD3B8"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout1"
         app:layout_constraintEnd_toEndOf="parent"
 
-        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
-    <TextView
-        android:id="@+id/tv4"
-        android:layout_width="56dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="208dp"
-        android:text="한글"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv5"
-        android:layout_width="56dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="24dp"
-        android:text="영어"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.898"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/btnmenu"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:background="@drawable/button_menu"
+            android:shadowColor="#FF2BB5"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:layout_marginLeft="5dp"
+            android:text="메뉴"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
 
-    <ImageButton
-        android:id="@+id/btn_current_location"
+            app:layout_constraintHorizontal_bias="0.061"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.023" />
 
-        android:layout_width="89dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/baseline_compare_arrows_24"
-        app:layout_constraintEnd_toStartOf="@+id/tv5"
-        app:layout_constraintHorizontal_bias="0.928"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/tv4"
+            android:layout_width="56dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="150dp"
+            android:text="한글"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.898"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="87dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="11dp"
-        android:text="down"
-        app:layout_constraintBottom_toTopOf="@+id/btn_current_location"
-        app:layout_constraintEnd_toStartOf="@+id/tv5"
-        app:layout_constraintStart_toEndOf="@+id/tv4"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv5"
+            android:layout_width="56dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="300dp"
+            android:text="영어"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.898"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_current_location"
+
+            android:layout_width="89dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="200dp"
+            android:src="@drawable/baseline_compare_arrows_24"
+            android:background=""
+            app:layout_constraintEnd_toStartOf="@+id/tv5"
+            app:layout_constraintHorizontal_bias="0.928"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="87dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="8dp"
+
+            android:text="down"
+            app:layout_constraintBottom_toTopOf="@+id/btn_current_location"
+            app:layout_constraintEnd_toStartOf="@+id/tv5"
+            app:layout_constraintStart_toEndOf="@+id/tv4"
+            app:layout_constraintTop_toTopOf="parent" />
+    </FrameLayout>
+
 
     <!-- 프레임레이아웃 1 -->
-
-    <!-- 프레임레이아웃 2 -->
 
 
     <FrameLayout
         android:id="@+id/frameLayout1"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-
-        android:layout_weight="2"
+        android:layout_height="0dp"
         android:background="#3C4AD3B8"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.934">
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout0"
+        app:layout_constraintVertical_bias="0">
 
         <EditText
             android:id="@+id/et1"
@@ -112,7 +132,7 @@
         <Button
             android:id="@+id/btn_clear"
             android:layout_width="70dp"
-            android:layout_height="46dp"
+            android:layout_height="50dp"
 
             android:layout_marginStart="20dp"
             android:layout_marginTop="166dp"
@@ -157,25 +177,24 @@
 
     <FrameLayout
         android:id="@+id/frameLayout2"
-        android:layout_width="390dp"
-        android:layout_height="220dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
 
-        android:layout_weight="2"
         android:background="#270000FF"
 
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.511">
+        app:layout_constraintStart_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout1">
 
         <EditText
             android:id="@+id/et2"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
             android:background="@android:color/transparent"
             android:hint="번역 대기 중"
             android:selectAllOnFocus="true"
@@ -216,22 +235,21 @@
     <FrameLayout
         android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_weight="2"
+        android:layout_height="0dp"
         android:background="#4B0088FF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.897">
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
+        android:layout_marginBottom="50dp"
+>
 
         <EditText
             android:id="@+id/et3"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
 
             android:background="@android:color/transparent"
             android:hint="대답 준비중"

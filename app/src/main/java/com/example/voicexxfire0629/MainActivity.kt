@@ -72,14 +72,16 @@ object GlobalData {
 class MainActivity : AppCompatActivity() {
 
     //광고변수전역선언
-    lateinit var mAdView : AdView
+    lateinit var mAdView: AdView
 
 
     //api키 전역선언
     private lateinit var key: String
+
     // Rest of your code
 //    바인딩 추가 초기화
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
     //전역번역 관련 변수
     private lateinit var translatorentokorean: com.google.mlkit.nl.translate.Translator
     private lateinit var translatorkoreantoen: com.google.mlkit.nl.translate.Translator
@@ -93,12 +95,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tv1: TextView
     private lateinit var tv4: TextView
     private lateinit var tv5: TextView
+
     //한영 버튼 변수 1이면 한영  2이면 영한
-    private  var kor = 1
+    private var kor = 1
+
     //편집 텍스트
     private var et1: EditText? = null
     private var et2: EditText? = null
     private var et3: EditText? = null
+
     //speak 변수
     private lateinit var textToSpeech: TextToSpeech
 
@@ -127,15 +132,17 @@ class MainActivity : AppCompatActivity() {
 
 /////////////변수선언
         var intent = Intent(this, SubActivity::class.java)
-        val btnmenu : Button = findViewById(R.id.btnmenu)
+        val btnmenu: Button = findViewById(R.id.btnmenu)
         val btn_voice: Button = findViewById(R.id.btn_voice)
-        val btn_current_location : ImageButton = findViewById(R.id.btn_current_location)
+        val btn_current_location: ImageButton = findViewById(R.id.btn_current_location)
         val btn_trans: Button = findViewById(R.id.btn_trans)
         val btn_clear: Button = findViewById(R.id.btn_clear)
         val btn_speak1: Button = findViewById(R.id.btn_speak1)
         val btn_speak2: Button = findViewById(R.id.btn_speak2)
         val btn_show: Button = findViewById(R.id.btn_show)
         val btn_ai: Button = findViewById(R.id.btn_ai)
+        //화살표 선언
+        var rotationCount = 0
 
         ///////////////////////////텍스트번역///////////////////////////////////////
         val translatorOptionsKorean = TranslatorOptions.Builder()
@@ -172,27 +179,48 @@ class MainActivity : AppCompatActivity() {
 //////////////////////////////////버튼 설정
         //////////////////////////////////버튼 설정
         //메뉴버튼
-        binding.btnmenu.setOnClickListener{
+        binding.btnmenu.setOnClickListener {
             startActivity(intent)
         }
         //  영어 체이지 버튼 클릭시
-        btn_current_location.setOnClickListener{
-            if(kor == 1){
+        btn_current_location.setOnClickListener {
+            rotationCount += 1
+            if (rotationCount > 2) rotationCount = 1
+
+            val degrees = 90 * rotationCount
+            val handler = Handler()
+
+            // Set the initial rotation to 0 degrees
+            btn_current_location.rotation = 0f
+
+            // Rotate the button by 90 degrees
+            btn_current_location.animate().rotation(degrees.toFloat()).setDuration(500).start()
+
+            // Delay the second rotation by 0.5 seconds
+            handler.postDelayed({
+                val degreesAfterDelay = degrees * 2
+                btn_current_location.animate().rotation(degreesAfterDelay.toFloat()).setDuration(500).start()
+            }, 500)
+
+            if (kor == 1) {
                 tv4.text = "영어"
                 tv5.text = "한글"
                 kor = 2
+
             }else{
                 tv4.text = "한글"
                 tv5.text = "영어"
                 kor = 1
             }
         }
+
+
         //지우기 버튼 (et1,2,3 전부 지울것인가  나머지 초기화할 내용은?
         btn_clear.setOnClickListener{
             et1?.setText("")
             tv4.text = "한글"
             tv5.text = "영어"
-            tv1.text = "---"
+            tv1.text = ""
             kor = 1
         }
         //번역버튼
@@ -223,7 +251,7 @@ class MainActivity : AppCompatActivity() {
             val dialogFragment = CustomDialogFragment()
             dialogFragment.show(supportFragmentManager, "CustomDialogFragment")
         }
-        ////
+        ////음성입력 버튼
         btn_voice.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), PERMISSIONS_RECORD_AUDIO)
@@ -232,6 +260,7 @@ class MainActivity : AppCompatActivity() {
                 startSpeechToText()
             }
         }
+
     }
 
 
@@ -298,7 +327,7 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onEndOfSpeech() {
                 // 음성 입력이 종료될 때 호출됩니다.
-                tv1.text = "enkodown"
+                tv1.text = "-----"
             }
             override fun onError(error: Int) {
                 // 음성 입력 중 오류가 발생했을 때 호출됩니다.
@@ -310,11 +339,35 @@ class MainActivity : AppCompatActivity() {
                     if (kor == 1){
                         et1?.setText(inputText.toString())
                         transkortoen1(inputText)
+                        Handler().postDelayed({
+                            tv1.text=""
+                        }, 1000)
+                        //음성듣기
+                        speak1()
+                        // 1초 후에 음성 인식 시작
+                        Handler().postDelayed({
+                            tv1.text=""
+                        }, 1000)
+                        ai()
+                        Handler().postDelayed({
+                            tv1.text=""
+                        }, 1000)
+                        //ai듣기
+                        speak2()
 
                     }
                     else{
                         et1?.setText(inputText.toString())
                         transentokor1(inputText)
+                        //음성듣기
+                        speak1()
+                        // 1초 후에 음성 인식 시작
+                        Handler().postDelayed({
+                            speechRecognizer.startListening(intent)
+                        }, 1000)
+                        //ai듣기
+                        ai()
+                        speak2()
                     }
                 }
             }
