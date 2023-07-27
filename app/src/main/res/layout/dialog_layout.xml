@@ -1,0 +1,108 @@
+<!-- dialog_layout.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <TextView
+        android:id="@+id/textView001"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="" />
+    <TextView
+        android:id="@+id/textView002"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="24sp"
+        android:text="!!!먼저 키값을 저장하신후 사용하세요" />
+    <TextView
+        android:id="@+id/textView003"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="" />
+    <TextView
+        android:id="@+id/textView004"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center"
+        android:textSize="14sp"
+        android:text="아래의 홈페이지에 접속후, 등록 하신 후에 따라 하세요" />
+
+    <TextView
+        android:id="@+id/textView005"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="https://openai.com/" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_gravity="left"
+        android:src="@drawable/key1" />
+    <TextView
+        android:id="@+id/textView007"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="14sp"
+        android:text="화면 가운데에 +creative new secret key 버튼을 누르세요.
+        (사진 위치를 못찾으신 분은 등록하신후에 아래의 주소로 들어가시면 됩니다.) " />
+
+    <TextView
+        android:id="@+id/textView008"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="https://platform.openai.com/account/api-keys" />
+
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_gravity="left"
+        android:src="@drawable/key2" />
+    <TextView
+        android:id="@+id/textView009"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="14sp"
+        android:text="키 이름을 적으세요.(아무거나 간단히 적으세요)" />
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_gravity="left"
+        android:src="@drawable/key3" />
+
+    <TextView
+        android:id="@+id/textView010"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="14sp"
+        android:text="화면에 보이는 값을 복사하세요.(이게 gpt api키값)" />
+    <TextView
+        android:id="@+id/textView011"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="14sp"
+        android:text="" />
+    <TextView
+        android:id="@+id/textView012"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="14sp"
+        android:text="그리고 앱으로 돌아와서, 메뉴 버튼클릭하여 환경설정창으로 이동후 키값을 입력한후 저장하기 버튼을 누르시면 됩니다.  수고 하셨습니다." />
+
+</LinearLayout>

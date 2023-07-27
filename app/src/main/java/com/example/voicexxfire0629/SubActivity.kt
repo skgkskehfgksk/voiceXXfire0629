@@ -13,9 +13,11 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.voicexxfire0629.databinding.ActivitySubBinding
 import com.google.android.gms.ads.AdRequest
@@ -54,6 +56,7 @@ class SubActivity : AppCompatActivity() {
         val btnback: Button = findViewById(R.id.btnback)
         val btn_history: Button = findViewById(R.id.btn_history)
         val btn_api: Button = findViewById(R.id.btn_api)
+        val btn_alert: Button = findViewById(R.id.btn_alert)
         val btn_privacy: Button = findViewById(R.id.btn_privacy)
 
 // 돌아가기 버튼 클릭시 스타트엑티비티 intent
@@ -85,8 +88,34 @@ class SubActivity : AppCompatActivity() {
             val intent5 = Intent(this, PrivacyPolicyActivity::class.java)
             startActivity(intent5)
         }
+        //
+        btn_alert.setOnClickListener{
+            AlertDialog()
+
+        }
 
 
+    }
+    private fun AlertDialog() {
+        // Create the dialog with the custom layout
+        val dialogView = layoutInflater.inflate(R.layout.dialog_layout, null)
+        val imageView = dialogView.findViewById<ImageView>(R.id.imageView1)
+        val imageView2 = dialogView.findViewById<ImageView>(R.id.imageView2)
+        val imageView3 = dialogView.findViewById<ImageView>(R.id.imageView3)
+        val textView = dialogView.findViewById<TextView>(R.id.textView001)
+
+        // Set the image and text from resources
+        imageView.setImageResource(R.drawable.key1) // Replace with your image resource
+
+        // Build the AlertDialog
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.apply {
+            setView(dialogView)
+
+        }
+        // Show the dialog
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
 }
