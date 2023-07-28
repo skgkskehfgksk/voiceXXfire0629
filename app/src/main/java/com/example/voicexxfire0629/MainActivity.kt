@@ -10,11 +10,14 @@ import android.graphics.Rect
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -95,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 //    바인딩 추가 초기화
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    //전역번역 관련 변수
+    //번역 관련 변수
     private lateinit var translatorentokorean: com.google.mlkit.nl.translate.Translator
     private lateinit var translatorkoreantoen: com.google.mlkit.nl.translate.Translator
     private var booleanentokorean = false
@@ -104,7 +107,7 @@ class MainActivity : AppCompatActivity() {
     //음성 코드
     private val PERMISSIONS_RECORD_AUDIO = 1
     private val RC_SPEECH_RECOGNIZER = 2
-
+//버튼 위젯
     private lateinit var tv1: TextView
     private lateinit var tv4: TextView
     private lateinit var tv5: TextView
@@ -116,6 +119,9 @@ class MainActivity : AppCompatActivity() {
     private var et1: EditText? = null
     private var et2: EditText? = null
     private var et3: EditText? = null
+    //토스트실행여부
+    private var isToastShowing = false
+
 
     //speak 변수
     private lateinit var textToSpeech: TextToSpeech
@@ -166,6 +172,7 @@ class MainActivity : AppCompatActivity() {
         var rotationCount = 0
 
 
+
         ///////////////////////////텍스트번역///////////////////////////////////////
         val translatorOptionsKorean = TranslatorOptions.Builder()
             .setSourceLanguage(TranslateLanguage.ENGLISH)
@@ -203,72 +210,41 @@ class MainActivity : AppCompatActivity() {
 
 
         // 단어를 클릭시 번역  벡터 이미지를 클릭하면 해당 단어 발음 실행
-        et1?.setOnLongClickListener {
-            // 긴 클릭 이벤트 처리
-            val et1Text = et1?.text.toString() // Change to et2
-            val offset = et1?.getOffsetForPosition(it.x, it.y) // Change to et2
-            var start = offset?.let {
-                et1Text?.lastIndexOf(' ', it)?.plus(1) ?: 0 // Change to et2Text
-            } ?: 0 // Handle the case when offset is null
+        et1?.setOnLongClickListener { view ->
 
-            var end = offset?.let {
-                et1Text?.indexOf(' ', it)
-            } ?: et1Text?.length ?: 0 // Change to et2Text
+            // EditText의 텍스트가 변경되면 호출되는 콜백
+            // 현재 커서 위치를 가져옵니다.
+            val cursorPosition = et1?.selectionStart ?: 0
 
-            // Make sure start and end values are not negative
-            if (start < 0) start = 0
-            if (end < 0) end = et1Text?.length ?: 0
+            // 커서 위치를 기준으로 단어를 찾아냅니다.
+            val currentWord = findWordAtCursorPosition(et1?.text, cursorPosition)
+            showToastWithImage(currentWord)
 
-            val selectedWord = et1Text?.substring(start, end)
-
-            // wordtrans(selectedWord)를 호출하여 단어를 번역하거나 원하는 작업을 수행합니다.
-            wordtrans(selectedWord)
-            true // true를 반환하여 클릭 이벤트를 수신하고 EditText의 편집 기능을 막습니다.
+            // currentWord 변수를 사용하여 원하는 작업을 수행합니다.
+            // 예를 들어, currentWord를 다른 자판에 표시하거나 사용하여 다른 동작을 수행할 수 있습니다.
+            // 예시: displayWordOnKeypad(currentWord)
+            // 예시: doSomethingWithCurrentWord(currentWord)
+            true
         }
 
-        et2?.setOnLongClickListener {
-            // 긴 클릭 이벤트 처리
-            val et2Text = et2?.text.toString() // Change to et2
-            val offset = et2?.getOffsetForPosition(it.x, it.y) // Change to et2
-            var start = offset?.let {
-                et2Text?.lastIndexOf(' ', it)?.plus(1) ?: 0 // Change to et2Text
-            } ?: 0 // Handle the case when offset is null
 
-            var end = offset?.let {
-                et2Text?.indexOf(' ', it)
-            } ?: et2Text?.length ?: 0 // Change to et2Text
 
-            // Make sure start and end values are not negative
-            if (start < 0) start = 0
-            if (end < 0) end = et2Text?.length ?: 0
+        et2?.setOnLongClickListener { view ->
+            val cursorPosition = et2?.selectionStart ?: 0
 
-            val selectedWord = et2Text?.substring(start, end)
+            // 커서 위치를 기준으로 단어를 찾아냅니다.
+            val currentWord = findWordAtCursorPosition(et2?.text, cursorPosition)
+            showToastWithImage(currentWord)
 
-            // wordtrans(selectedWord)를 호출하여 단어를 번역하거나 원하는 작업을 수행합니다.
-            wordtrans(selectedWord)
-            true // true를 반환하여 클릭 이벤트를 수신하고 EditText의 편집 기능을 막습니다.
+            true
         }
-        et3?.setOnLongClickListener {
-            // 긴 클릭 이벤트 처리
-            val et3Text = et3?.text.toString() // Change to et2
-            val offset = et3?.getOffsetForPosition(it.x, it.y) // Change to et2
-            var start = offset?.let {
-                et3Text?.lastIndexOf(' ', it)?.plus(1) ?: 0 // Change to et2Text
-            } ?: 0 // Handle the case when offset is null
+        et3?.setOnLongClickListener { view ->
+            val cursorPosition = et3?.selectionStart ?: 0
 
-            var end = offset?.let {
-                et3Text?.indexOf(' ', it)
-            } ?: et3Text?.length ?: 0 // Change to et2Text
-
-            // Make sure start and end values are not negative
-            if (start < 0) start = 0
-            if (end < 0) end = et3Text?.length ?: 0
-
-            val selectedWord = et3Text?.substring(start, end)
-
-            // wordtrans(selectedWord)를 호출하여 단어를 번역하거나 원하는 작업을 수행합니다.
-            wordtrans(selectedWord)
-            true // true를 반환하여 클릭 이벤트를 수신하고 EditText의 편집 기능을 막습니다.
+            // 커서 위치를 기준으로 단어를 찾아냅니다.
+            val currentWord = findWordAtCursorPosition(et3?.text, cursorPosition)
+            showToastWithImage(currentWord)
+            true
         }
         //메뉴버튼
         binding.btnmenu.setOnClickListener {
@@ -378,18 +354,53 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+    // 커서 위치를 기준으로 현재 단어를 찾는 함수
+    private fun findWordAtCursorPosition(text: CharSequence?, cursorPosition: Int): String {
+        if (text.isNullOrEmpty() || cursorPosition <= 0) {
+            return ""
+        }
 
-    private fun wordtrans(inputtext: String?) {
-        if (booleankoreantoen) {
+        val textLength = text.length
+        var start = cursorPosition - 1
+        var end = cursorPosition
+
+        // 커서 위치를 기준으로 현재 단어의 시작과 끝 인덱스를 찾습니다.
+        while (start >= 0 && !text[start].isWhitespace()) {
+            start--
+        }
+        while (end < textLength && !text[end].isWhitespace()) {
+            end++
+        }
+
+        // 단어의 시작과 끝 인덱스를 기준으로 현재 단어를 추출합니다.
+        return text.subSequence(start + 1, end).toString()
+    }
+
+    private fun showToastWithImage(inputtext:String?) {
+        // 커스텀 레이아웃으로 토스트 메시지 생성
+        val toastLayout = layoutInflater.inflate(
+            R.layout.toast_custom_layout,
+            findViewById(R.id.toast_layout_root) as ViewGroup?
+        )
+        val toastMessage = toastLayout.findViewById<TextView>(R.id.textViewMessage)
+        val imageViewIcon = toastLayout.findViewById<ImageView>(R.id.imageViewIcon001)
+
+        if (isToastShowing) {
+            // 이미 토스트가 실행 중인 경우, imageViewIcon에 클릭 이벤트 리스너를 설정
+            imageViewIcon.setOnClickListener {
+                val selectedWord: String = when (selectedEditTextId) {
+                    R.id.et1 -> et1?.text.toString()
+                    R.id.et2 -> et2?.text.toString()
+                    R.id.et3 -> et3?.text.toString()
+                    // 여기에 다른 EditText들의 ID와 해당하는 값을 추가하면 됩니다.
+                    else -> "" // 선택된 EditText가 없을 때에 대한 기본값 처리
+                }
+                wordspeak(selectedWord)
+            }
+        } else {
+            // 토스트가 실행 중이지 않은 경우
             translatorentokorean.translate(inputtext.toString())
                 .addOnSuccessListener { translatedText ->
-                    // 커스텀 레이아웃으로 토스트 메시지 생성
-                    val toastLayout = layoutInflater.inflate(
-                        R.layout.toast_custom_layout,
-                        findViewById(R.id.toast_layout_root) as ViewGroup?
-                    )
-                    val toastMessage = toastLayout.findViewById<TextView>(R.id.textViewMessage)
-                    val imageViewIcon = toastLayout.findViewById<ImageView>(R.id.imageViewIcon001)
 
                     // 토스트 메시지에 표시될 내용 설정
                     toastMessage.text = translatedText
@@ -398,14 +409,18 @@ class MainActivity : AppCompatActivity() {
                     imageViewIcon.setImageResource(R.drawable.baseline_volume_mute_24)
 
                     val toast = Toast(this)
-                    toast.duration = Toast.LENGTH_SHORT
+                    toast.duration = Toast.LENGTH_LONG
                     toast.view = toastLayout
 
                     // 중앙에 토스트 메시지 표시
-                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.setGravity(Gravity.TOP, 200, 300)
 
                     toast.show()
 
+                    // 토스트가 실행 중인 상태로 플래그 설정
+                    isToastShowing = true
+
+                    // 클릭 이벤트 리스너 설정
                     imageViewIcon.setOnClickListener {
                         val selectedWord: String = when (selectedEditTextId) {
                             R.id.et1 -> et1?.text.toString()
@@ -416,12 +431,19 @@ class MainActivity : AppCompatActivity() {
                         }
                         wordspeak(selectedWord)
                     }
+
+                    // 토스트 메시지가 사라지는 시점에 플래그 리셋
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        isToastShowing = false
+                    }, toast.duration.toLong())
                 }
                 .addOnFailureListener { exception ->
                     // 번역 실패 시 처리할 내용 추가 가능
                 }
         }
     }
+
+
 
 
     //알림창 일주일에 한번
